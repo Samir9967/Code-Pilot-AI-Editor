@@ -1,23 +1,18 @@
-
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const poppins = Poppins({
+  subsets:["latin"],
+  weight:["100","200","300","400","500","600","700","800","900"]
+})
 
 export const metadata: Metadata = {
-  title: "Code-Pilot AI",
+  title: "Code-Pilot AI-Intelligent Code Editor",
   description: "AI-powered coding workspace",
 };
 
@@ -35,20 +30,23 @@ async function AuthSession({
   );
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
-    <html lang="en">
+    <SessionProvider session={session}>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        className={`${poppins.className} antialiased`}
       >
-        <Suspense fallback={null}>
-          <AuthSession>{children}</AuthSession>
-        </Suspense>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
+    </SessionProvider>
   );
 }
