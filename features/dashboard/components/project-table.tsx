@@ -66,30 +66,29 @@ interface EditProjectData {
   description: string;
 }
 
-
 export default function ProjectTable({
   projects,
   onDeleteProject,
   onDuplicateProject,
   onUpdateProject,
 }: ProjectTableProps) {
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [editDialogOpen, setEditDialogOpen] = useState(false);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-    const [editData, setEditData] = useState<EditProjectData>({title:"",description:""})
-    const [isLoading, setIsLoading] = useState(false);
-    const [favourite,setFavourite] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [editData, setEditData] = useState<EditProjectData>({
+    title: "",
+    description: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [favourite, setFavourite] = useState(false);
 
   const handleDuplicateProject = async (project: Project) => {
-    if(!onDuplicateProject) return;
+    if (!onDuplicateProject) return;
 
     setIsLoading(true);
-    try{
-
-    }catch(error){
-
-    }finally{
-        
+    try {
+    } catch (error) {
+    } finally {
     }
   };
 
@@ -153,11 +152,12 @@ export default function ProjectTable({
                 </TableCell>
                 <TableCell>
                   <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
+                    <DropdownMenuTrigger
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent"
+                      aria-label="Open project actions"
+                    >
+                      <MoreHorizontal className="h-4 w-4" />
+                      <span className="sr-only">Open menu</span>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuItem>
@@ -217,7 +217,7 @@ export default function ProjectTable({
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody> 
+          </TableBody>
         </Table>
       </div>
     </>
